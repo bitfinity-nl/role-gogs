@@ -1,0 +1,35 @@
+---
+# Title: role-gog
+#
+# Author: bitfinity.nl
+# File: tasks/mariadb-dababase.yml
+#
+# Description:
+#   A painless self-hosted Git service.
+#
+# Sources:
+#   https://gogs.io/
+
+- name: "Transfer template(s) to system"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: 'mariadb/50-server.cnf.j2', dest: '/etc/mysql/mariadb.conf.d/50-server.cnf' }
+
+- name: "Create initial Gogs MariaDB database"
+  mysql_db:
+    name: "{{ gogs_db_name }}"
+    encoding: utf8
+    state: present
+    login_user: "{{ mariadb_administrative_account }}"
+    login_password: "{{ mariadb_administrative_password }}"
+
+- name: "Create Gogs MariaDB database user"
+  mysql_user:
+    name: "{{ gogs_db_user }}"
+    password: "{{ gogs_db_pass }}"
+    priv: "{{ gogs_db_user }}.*:ALL,GRANT"
+    state: present
+    login_user: "{{ mariadb_administrative_account }}"
+    login_password: "{{ mariadb_administrative_password }}"

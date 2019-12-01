@@ -1,0 +1,43 @@
+---
+# Title: role-gog
+#
+# Author: bitfinity.nl
+# File: tasks/main.yml
+#
+# Description:
+#   A painless self-hosted Git service.
+#
+# Sources:
+#   https://gogs.io/
+#
+# Note(s):
+#   Change your variable(s) here, in your playbook or in your global variable(s).
+
+
+# -- MariaDB server settings --
+#
+# Variable(s):
+#   mariadb_administrative_account  : 'root' 
+#   mariadb_administrative_password : 'password'
+#  
+mariadb_administrative_account  : 'root' 
+mariadb_administrative_password : '{{ def_mysql_pass }}'
+
+# -- MariaDB database settings --
+#
+# Variable(s):
+#   gogs_db_name : 'gogs'      # Set the database name.
+#   gogs_db_user : 'gogs'      # Set the database username.
+#   gogs_db_pass : 'password'  # Set the database password.
+# 
+gogs_db_name : 'gogs'
+gogs_db_user : 'gogs'
+gogs_db_pass : 'password'
+
+# -- Gogs --
+#  
+# Variable(s):
+#   gogs_version: 'https://github.com/gogs/gogs/releases/download/v0.11.91/linux_amd64.tar.gz'  # Binary version from Github.
+#      
+#
+gogs_version: 'https://github.com/gogs/gogs/releases/download/v0.11.91/linux_amd64.tar.gz'

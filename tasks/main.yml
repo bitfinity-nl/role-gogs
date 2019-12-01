@@ -1,0 +1,30 @@
+---
+# Title: role-gog
+#
+# Author: bitfinity.nl
+# File: tasks/main.yml
+#
+# Description:
+#   A painless self-hosted Git service.
+#
+# Sources:
+#   https://gogs.io/
+
+
+- name: "Install MariaDB server"
+  import_tasks: mariadb-server.yml
+  when:
+    - ansible_distribution_version == "18.04"
+    - ansible_architecture == "x86_64"
+
+- name: "Install Gogs database"
+  import_tasks: mariadb-database.yml
+  when:
+    - ansible_distribution_version == "18.04"
+    - ansible_architecture == "x86_64"
+
+- name: "Install Gogs"
+  import_tasks: gogs.yml
+  when:
+    - ansible_distribution_version == "18.04"
+    - ansible_architecture == "x86_64"

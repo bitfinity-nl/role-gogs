@@ -1,0 +1,61 @@
+---
+# Title: role-gog
+#
+# Author: bitfinity.nl
+# File: tasks/gogs.yml
+#
+# Description:
+#   A painless self-hosted Git service.
+#
+# Sources:
+#   https://gogs.io/
+
+- name: "Install packages"
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes 
+  vars:
+    packages:
+    - git
+    - wget
+
+- name: "Create a gogs group"
+  group:
+    name: gogs
+
+- name: "Create a gogs system user"
+  user:
+    name: gogs
+    group: gogs
+    state: present
+
+- name: "Download binary Gogs from Github"
+  get_url:
+    url: "{{ gogs_version }}"
+    dest: /tmp/
+
+- name: "Unpack binary"
+  unarchive:
+    src: /tmp/linux_amd64.tar.gz
+    dest: /opt/
+    owner: gogs
+    group: gogs
+    mode: 0755
+    remote_src: yes
+
+- name: "copy gogs systemd service file to /etc/systemd/system/"
+  template:
+    src: gogs/gogs.service.j2
+    dest: /etc/systemd/system/gogs.service
+    owner: gogs
+    group: gogs
+    mode: 0777
+#    remote_src: yes
+
+- name: "Start and enable services"
+  systemd:
+    name: gogs
+    state: started
+    enabled: yes
+    
