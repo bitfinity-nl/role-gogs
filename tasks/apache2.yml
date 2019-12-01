@@ -1,0 +1,61 @@
+---
+# Title: role-gog
+#
+# Author: bitfinity.nl
+# File: tasks/apache2.yml
+#
+# Description:
+#   A painless self-hosted Git service.
+#
+# Sources:
+#   https://gogs.io/
+
+
+- name: "Install packages"
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+    state: present
+  vars:
+    packages:
+    - apache2
+
+- name: "Apache2 enable SSL module"
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - log_config
+    - proxy
+    - proxy_http
+    - proxy_wstunnel
+    - ssl
+
+- name: "Transfer templates"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: 'apache2/gogs.conf.j2', dest: '/etc/apache2/sites-available/gogs.conf' }
+
+- name: "Disable default sites"
+  command: "a2dissite {{ item }}"
+  with_items:
+    - 000-default.conf
+    - default-ssl.conf 
+  notify:
+    - restart_apache2
+
+- name: "Enable gogs.conf"
+  command: a2ensite gogs.conf
+  notify:
+    - restart_apache2
+
+- name: "Configure Firewall"
+  ufw:
+    rule: allow
+    proto: tcp
+    port: "{{ item }}"
+  with_items:
+    - "80"
+    - "443"

@@ -46,12 +46,21 @@
 
 - name: "copy gogs systemd service file to /etc/systemd/system/"
   template:
-    src: gogs/gogs.service.j2
-    dest: /etc/systemd/system/gogs.service
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: gogs
     group: gogs
-    mode: 0777
-#    remote_src: yes
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: 'gogs/app.ini.j2', dest: '/opt/gogs/custom/conf/app.ini', mode: '0644', desc: 'Gogs Configuration' }
+    - { src: 'gogs/gogs.service.j2', dest: '/etc/systemd/system/gogs.service', mode: '0777', desc: 'For systemd service' }
+
+#- name: "Create gogs admin user"
+#  command: ./gogs admin create-user --name "{{ gogs_admin_user }}" --password "{{ gogs_admin_pass }}" --admin --email "{{ gogs_admin_mail }}"
+#  become: yes
+#  become_user: ansible
+#  args:
+#    chdir: /opt/gogs
 
 - name: "Start and enable services"
   systemd:

@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+
+  ServerName {{ gogs_apache2_domain }}
+  Redirect permanent / https://{{ gogs_apache2_domain }}/
+
+</VirtualHost>
+
+<VirtualHost *:443>
+
+  ServerName {{ gogs_apache2_domain }}
+  ProxyPreserveHost Off
+
+  SSLEngine on
+  SSLProxyEngine On
+  SSLCertificateFile {{ gogs_apache2_cert_file }}
+  SSLCertificateKeyFile {{ gogs_apache2_cert_keyfile }}
+
+  ProxyPass / http://localhost:3000/
+  ProxyPassReverse / http://localhost:3000/
+
+</VirtualHost>

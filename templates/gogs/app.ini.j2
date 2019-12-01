@@ -1,0 +1,51 @@
+APP_NAME = {{ gogs_app_name }}
+RUN_USER = {{ gogs_run_user }}
+RUN_MODE = {{ gogs_run_mode }}
+
+[database]
+DB_TYPE  = {{ gogs_db_type }}
+HOST     = {{ gogs_host }}
+NAME     = {{ gogs_name }}
+USER     = {{ gogs_user }}
+PASSWD   = {{ gogs_passwd }}
+SSL_MODE = {{ gogs_ssl_mode }}
+PATH     = {{ gogs_path }}
+
+[repository]
+ROOT = {{ gogs_root }}
+
+[server]
+DOMAIN           = {{ gogs_gogs_domain }}
+HTTP_PORT        = {{ gogs_http_port }}
+ROOT_URL         = {{ gogs_root_url }}
+DISABLE_SSH      = {{ gogs_disable_ssh }}
+SSH_PORT         = {{ gogs_ssh_port }}
+START_SSH_SERVER = {{ gogs_start_ssh_server }}
+OFFLINE_MODE     = {{ gogs_offline_mode }}
+
+[mailer]
+ENABLED = {{ gogs_enabled }}
+
+[service]
+REGISTER_EMAIL_CONFIRM = {{ gogs_register_email_confirm}}
+ENABLE_NOTIFY_MAIL     = {{ gogs_enable_notify_mail }}
+DISABLE_REGISTRATION   = {{ gogs_disable_registration }}
+ENABLE_CAPTCHA         = {{ gogs_enable_captcha }}
+REQUIRE_SIGNIN_VIEW    = {{ gogs_require_signin_view }}
+
+[picture]
+DISABLE_GRAVATAR        = {{ gogs_disable_gravatar }}
+ENABLE_FEDERATED_AVATAR = {{ gogs_enable_federated_avatar}}
+
+[session]
+PROVIDER = {{ gogs_provider }}
+
+[log]
+MODE      = {{ gogs_mode }}
+LEVEL     = {{ gogs_level }}
+ROOT_PATH = {{ gogs_root_path }}
+
+[security]
+INSTALL_LOCK = {{ gogs_install_lock }}
+SECRET_KEY   = {{ gogs_secret_key }}
+

@@ -1,0 +1,18 @@
+---
+# Title: role-gog
+#
+# Author: bitfinity.nl
+# File: tasks/main.yml
+#
+# Description:
+#   A painless self-hosted Git service.
+#
+# Sources:
+#   https://gogs.io/
+
+- name: "restart_apache2"
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+    name: apache2
