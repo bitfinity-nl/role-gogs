@@ -44,6 +44,16 @@
     mode: 0755
     remote_src: yes
 
+- name: "Create directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: gogs
+    group: gogs
+    mode: 0755
+  with_items:
+    - /opt/gogs/custom/conf
+
 - name: "copy gogs systemd service file to /etc/systemd/system/"
   template:
     src: "{{ item.src }}"
