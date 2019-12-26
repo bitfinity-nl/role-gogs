@@ -58,7 +58,7 @@ gogs_admin_mail : 'email@example.com'
 gogs_apache2_domain         : '192.168.122.10'
 gogs_apache2_cert_file      : '{{ def_ap_sslcertificatefile }}'
 gogs_apache2_cert_keyfile   : '{{ def_ap_sslcertificatekeyfile }}'
-guac_apache2_cert_chainfile : '{{ def_ap_sslcertificatechainfile }}'
+gogs_apache2_cert_chainfile : '{{ def_ap_sslcertificatechainfile }}'
 
 # -- Gogs Config file /opt/gogs/custom/conf/app.ini --
 #
